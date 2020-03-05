@@ -1,0 +1,19 @@
+{
+  "name": "luxdb",
+  "version": "0.1.0",
+  "description": "LuxDB is a tiny, lightweight, 0 dependency, easy-to-use JSON-based database",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/luxdb.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinKondor/LuxDB.git"
+  },
+  "author": "Martin Kondor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MartinKondor/LuxDB/issues"
+  },
+  "homepage": "https://github.com/MartinKondor/LuxDB#readme"
+}
