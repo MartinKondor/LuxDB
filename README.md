@@ -24,6 +24,15 @@ luxdb.set('text', 'Some data')
     .save();
 ```
 
+## Speed
+
+Test data structure: `{'n': [Attributes]}`
+
+| No. of Attributes Written | Time Elapsed | Attributes Wrote/sec | Data Size Wrote |
+| ------------------------: | -----------: | -------------------: | --------------: |
+|                   100,000 |         30ms |      3,333,333,333/sec |         575 KB |
+|                 1,000,000 |         40ms |     25,000,000,000/sec |         6,56 MB |
+
 ## Contributing
 
 Ways to contribute:

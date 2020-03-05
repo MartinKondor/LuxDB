@@ -127,3 +127,36 @@ class LuxDB
         fs.writeFileSync(this.dbFilename, JSON.stringify(this.db));
     }
 }
+
+/*
+let start = new Date();
+
+setTimeout(() => 
+{
+    // Add 100 test elements
+    const luxdb = new LuxDB('cache/testdb.json');
+    luxdb.set('n', []).point('n');
+
+    for (let i = 0; i < 1000000; i++)
+    {
+        luxdb.push(i);
+    }
+
+    console.log('Execution time: %dms', new Date() - start);
+    luxdb.save();
+}, 10);
+*/
+
+/*
+Test data structure
+
+{'n': [Attributes]}
+
+----------------------------------------------------------------------------------------------------
+No. of Attributes Written |   Time Elapsed  |   Data Size Wrote
+----------------------------------------------------------------------------------------------------
+100,000                   |   30ms          |   575 KB
+----------------------------------------------------------------------------------------------------
+1,000,000                 |   40ms          |   6,56 MB
+
+*/
