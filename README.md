@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/badge/version-v0.1.0-red.svg)](https://github.com/MartinKondor/LuxDB) [![Project Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/MartinKondor/SimpleComposer) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) [![GitHub Issues](https://img.shields.io/github/issues/MartinKondor/LuxDB.svg)](https://github.com/MartinKondor/LuxDB/issues) ![Size](https://img.shields.io/bundlephobia/minzip/stormdb?color=brightgreen) [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
-☀ LuxDB is a tiny, lightweight, 0 dependency, easy-to-use JSON-based database
+LuxDB is a tiny, lightweight, 0 dependency, easy-to-use JSON-based database
 
 ```js
 const luxdb = new LuxDB('cache/testdb.json');
