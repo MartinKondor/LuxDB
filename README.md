@@ -1,6 +1,6 @@
 # ☀ LuxDB
 
-[![version](https://img.shields.io/badge/version-v0.2.0-red.svg)](https://github.com/MartinKondor/LuxDB) [![Project Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/MartinKondor/SimpleComposer) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) [![GitHub Issues](https://img.shields.io/github/issues/MartinKondor/LuxDB.svg)](https://github.com/MartinKondor/LuxDB/issues) ![Size](https://img.shields.io/bundlephobia/minzip/stormdb?color=brightgreen) [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![version](https://img.shields.io/badge/version-v0.2.1-yellow.svg)](https://github.com/MartinKondor/LuxDB) [![Project Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/MartinKondor/SimpleComposer) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) [![GitHub Issues](https://img.shields.io/github/issues/MartinKondor/LuxDB.svg)](https://github.com/MartinKondor/LuxDB/issues) ![Size](https://img.shields.io/bundlephobia/minzip/stormdb?color=brightgreen) [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 LuxDB is a tiny, lightweight, 0 dependency, easy-to-use JSON-based database
 
@@ -57,11 +57,21 @@ console.log(query);
 ```
 
 ### Update a specific row by column value
-TODO
+```js
+luxdb.update({name: 'Jane Doe'}, {name: 'Jane Janett Doe'})
+```
 
-### Set an attribute to be auto added and incremented
-TODO
-.conf({id: luxdb.conf.AUTO_INCREMENT})
+### Set an attribute to be auto added and incremented (TODO)
+```js
+luxdb.point('users')
+    .push({id: 0, name: 'Joe Doe', gender: 'male'})
+    .push({id: 1, name: 'Jane Doe', gender: 'female'})
+    .conf({id: luxdb.configs.AUTO_INCREMENT})
+    .push({name: 'Aadam Doe', gender: 'male'})  // Will have id: 2
+    .push({name: 'Eve Doe', gender: 'female'})  // Will have id: 3 
+```
+
+_For a full example implementation, see the file [tests/example.js](./tests/example.js)._
 
 ## Speed
 

@@ -120,12 +120,35 @@ class LuxDB {
     }
 
     /**
-     * Function for setting and attribute in DB
+     * Function for setting an attribute in DB
      * @param {string} key The name of the table
      * @param {any} value The value of the table ({}, [] etc.)
      */
     set(key, value) {
         this.pointer[key] = value;
+        return this;
+    }
+    
+    /**
+     * Function for updating an attribute in DB
+     * @param {string} key The identificator of the row
+     * @param {any} value The attribute and the value to change
+     */
+    update(key, value) {
+        if (typeof key === 'object') {
+            let rows = this.get(key);
+            for (let row of rows) {
+                for (const change_key of Object.keys(value)) {
+                    row[change_key] = value[change_key]
+                }
+            }
+        }
+        else if (typeof key === 'function') {
+            let rows = this.get(key);
+            for (let row of rows) {
+                row = value(row);
+            }
+        }
         return this;
     }
 
@@ -156,49 +179,6 @@ class LuxDB {
         return this;
     }
 }
-
-// Load/Create the database
-const luxdb = new LuxDB('cache/testdb.json');
-// luxdb.clear()  // Remove every data from the file
-
-// Set a new 'table' called cars
-luxdb.set('cars', [])
-    .point('cars')  // Pointing is ALWAYS needed
-    .push({id: 1, width: 1700, height: 1000, weight: 1922})  // Add instances of cars
-    .push({id: 2, width: 1950, height: 1233, weight: 2203})
-    .push({id: 3, width: 1725, height: 1065, weight: 1922});
-
-// Set a new 'table' called planes
-luxdb.point('.')  // Set back the pointer for new table creation
-    .set('planes', [])
-    .point('planes')
-    .push({id: 1, width: 9_235, height: 7544, weight: 10_000})
-    .push({id: 2, width: 13_457, height: 5332, weight: 10_000})
-    .push({id: 3, width: 17_324, height: 4264, weight: 10_000});
-
-luxdb.save();  // Save changes to the disk
-
-// Search with one attribute
-let query = luxdb.point('cars').get({id: 2})
-console.log(query);
-// Prints: [ { id: 2, width: 1950, height: 1233, weight: 2203 } ]
-
-// Seach for multiple values
-query = luxdb.point('cars').get({weight: 1922})
-console.log(query);
-// Prints:
-//  [
-//    { id: 1, width: 1700, height: 1000, weight: 1922 },
-//    { id: 3, width: 1725, height: 1065, weight: 1922 }
-//  ]
-
-/// TODO
-// Seach with a function
-//query = luxdb.point('planes').get(e => e['weight'] === 10_000)
-//console.log(query);
-
-//query = luxdb.point('planes').get(e => e['weight'] !== 10_000)  // Seach for something non existent
-//console.log(query);
 
 /*
 let start = new Date();
