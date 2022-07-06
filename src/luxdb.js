@@ -1,8 +1,6 @@
 const fs = require('fs');
 
-
-const debug = (a='') => 
-{
+const debug = (a='') => {
     console.log('LuxDB: ' + a);
 }
 
@@ -10,25 +8,21 @@ const debug = (a='') =>
 /**
  * The main API class for users.
  */
-class LuxDB 
-{
+class LuxDB {
     /**
      * 
      * @param {string} filename Database main file name,
      * can be non existent file
      */
-    constructor(filename=false)
-    {
+    constructor(filename=false) {
         // If there is no filename, or
         // if it's undefined
-        if (typeof filename !== 'string')
-        {
+        if (typeof filename !== 'string') {
             filename = 'luxdb.json';
         }
 
         // Pass filename to the engine
-        if (!fs.existsSync(filename))
-        {
+        if (!fs.existsSync(filename)) {
             // Create file
             fs.appendFile(filename, '{}', (err) => {
                 if (err) throw err;
@@ -39,8 +33,7 @@ class LuxDB
         // Load in database from file
         let db = {};
 
-        fs.readFile(filename, (err, data) =>
-        {
+        fs.readFile(filename, (err, data) => {
             if (err) throw err; 
             if (!data) data = '{}';
 
@@ -59,18 +52,16 @@ class LuxDB
      * @param {string} where Of key or expresson from
      * the below list
      */
-    point(where)
-    {
-        if (where == '.')  // Set back to base
-        {
+    point(where) {
+        // Set back to base 
+        if (where == '.') {
             this.pointer = this.db;
         }
-        else if (where == '..')  // Go up with one key
-        {
+        // Go up with one key
+        else if (where == '..') {
             this.pointer = this.lastPointer;
         }
-        else
-        {
+        else {
             this.pointer = this.pointer[where];
         }
         return this;
@@ -79,18 +70,14 @@ class LuxDB
     /**
      * Function for quering from DB
      */
-    get(key)
-    {
+    get(key) {
         // Find object based on key
-        if (typeof key === 'object')
-        {
-            return this.pointer.find((element) => 
-            {
+        if (typeof key === 'object') {
+            return this.pointer.find((element) => {
                 let keys = Object.keys(key);
-                for (let k in keys)
-                {
-                    if (element[k] !== key[k])
-                    {
+                
+                for (let k in keys) {
+                    if (element[k] !== key[k]) {
                         return false;
                     }
                 }
@@ -104,8 +91,7 @@ class LuxDB
     /**
      * Function for setting and attribute in DB
      */
-    set(key, value)
-    {
+    set(key, value) {
         this.pointer[key] = value;
         return this;
     }
@@ -114,16 +100,14 @@ class LuxDB
      * 
      * @param {object} obj Add the given obj to the current point array
      */
-    push(obj)
-    {
+    push(obj) {
         this.pointer.push(obj);
     }
 
     /**
      * Function for saving DB to file
      */
-    save()
-    {
+    save() {
         fs.writeFileSync(this.dbFilename, JSON.stringify(this.db));
     }
 }
@@ -131,14 +115,12 @@ class LuxDB
 /*
 let start = new Date();
 
-setTimeout(() => 
-{
+setTimeout(() => {
     // Add 100 test elements
     const luxdb = new LuxDB('cache/testdb.json');
     luxdb.set('n', []).point('n');
 
-    for (let i = 0; i < 1000000; i++)
-    {
+    for (let i = 0; i < 1000000; i++) {
         luxdb.push(i);
     }
 
