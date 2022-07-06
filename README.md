@@ -1,6 +1,6 @@
 # ☀ LuxDB
 
-[![version](https://img.shields.io/badge/version-v0.1.0-red.svg)](https://github.com/MartinKondor/LuxDB) [![Project Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/MartinKondor/SimpleComposer) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) [![GitHub Issues](https://img.shields.io/github/issues/MartinKondor/LuxDB.svg)](https://github.com/MartinKondor/LuxDB/issues) ![Size](https://img.shields.io/bundlephobia/minzip/stormdb?color=brightgreen) [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![version](https://img.shields.io/badge/version-v0.2.0-red.svg)](https://github.com/MartinKondor/LuxDB) [![Project Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/MartinKondor/SimpleComposer) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) [![GitHub Issues](https://img.shields.io/github/issues/MartinKondor/LuxDB.svg)](https://github.com/MartinKondor/LuxDB/issues) ![Size](https://img.shields.io/bundlephobia/minzip/stormdb?color=brightgreen) [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 LuxDB is a tiny, lightweight, 0 dependency, easy-to-use JSON-based database
 
@@ -13,16 +13,55 @@ console.log(luxdb.get({'id': 0}));
 // Prints { id: 0, name: 'Joe Doe' }
 ```
 
-## Examples
+## Usage
 
+### Pointer use
 ```js
-const luxdb = new LuxDB('cache/testdb.json');
-luxdb.set('text', 'Some data')
-    .set('number', 7)
-    .set('array', [])
-    .set('object', {})
-    .save();
+luxdb.point('users');
+luxdb.point('..');  // Sets the pointer to the last pointer
+luxdb.point('.');  // Sets the pointer to the database (starting point)
 ```
+
+### Creating a 'table' called _'users'_
+```js
+luxdb.set('users', []);
+```
+
+### Inserting a 'row' to the _'users'_ table
+```js
+luxdb.point('users');  // Always need to point to something first
+luxdb.push({id: 0, name: 'Joe Doe'});
+```
+
+### Inserting multiple rows to the _'users'_ table
+```js
+luxdb.point('users')
+    .push({id: 0, name: 'Joe Doe', gender: 'male'})
+    .push({id: 1, name: 'Jane Doe', gender: 'female'})
+    .push({id: 2, name: 'Aadam Doe', gender: 'male'})
+    .push({id: 3, name: 'Eve Doe', gender: 'female'})
+```
+
+### Select a specific row by column value
+```js
+let query = luxdb.point('users').get({id: 2})
+console.log(query);
+>> [ {id: 2, name: 'Aadam Doe', gender: 'male'} ]
+```
+
+### Select row by column value
+```js
+let query = luxdb.point('users').get({gender: 'female'})
+console.log(query);
+>> [ {id: 0, name: 'Joe Doe', gender: 'male'}, {id: 2, name: 'Aadam Doe', gender: 'male'} ]
+```
+
+### Update a specific row by column value
+TODO
+
+### Set an attribute to be auto added and incremented
+TODO
+.conf({id: luxdb.conf.AUTO_INCREMENT})
 
 ## Speed
 
@@ -54,16 +93,8 @@ Ways to contribute:
 
 * **[Martin Kondor](https://github.com/MartinKondor)**
 
-<p align="center">
-<a title="Fiverr" href="https://www.fiverr.com/martinkondor">
-<img id="fiverr-img" class="img-responsive" alt="Hire me on fiverr!" title="Hire me on fiverr!" src="https://martinkondor.github.io/img/hire_me_on_fiverr_button.png" width="222">
-</a>
-</p>
-
-<p align="center"><a href="https://www.patreon.com/bePatron?u=17006186" data-patreon-widget-type="become-patron-button"><img width="222" class="img-responsive" alt="Become a Patron!" title="Become a Patron!" src="https://martinkondor.github.io/img/become_a_patron_button.png"></a></p>
-
 ## License
 
-Copyright &copy; Martin Kondor 2020.
+Copyright &copy; Martin Kondor 2022.
 
 MIT license, see the [LICENSE](./LICENSE) file for more details.
